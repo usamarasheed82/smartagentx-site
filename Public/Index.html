@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartAgentX — AI Implementation for E-commerce, SaaS & Growing Businesses</title>
+<meta name="description" content="SmartAgentX builds AI into your business. Agentic Commerce Visibility, RAG implementations, and AI Augmentation via Vibe Coding. Real deliverables, not strategy decks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080b;--bg2:#0c0e12;--bg3:#11141a;
+  --border:rgba(255,255,255,0.055);--border2:rgba(255,255,255,0.11);
+  --blue:#5b9cf6;--blue-dim:rgba(91,156,246,0.09);--blue-border:rgba(91,156,246,0.18);
+  --green:#36d6a0;--green-dim:rgba(54,214,160,0.09);--green-border:rgba(54,214,160,0.18);
+  --amber:#f5a623;--amber-dim:rgba(245,166,35,0.09);--amber-border:rgba(245,166,35,0.18);
+  --red:#f07070;
+  --txt:#ebebed;--txt2:#8a8c92;--txt3:#42454c;
+  --mono:'IBM Plex Mono',monospace;
+  --head:'Syne',sans-serif;
+  --serif:'Fraunces',Georgia,serif;
+  --r:5px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--head);background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+
+/* dot grid */
+body::after{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,0.035) 1px,transparent 1px);background-size:30px 30px;pointer-events:none;z-index:0}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;padding:0 44px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,8,11,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.brand{font-family:var(--mono);font-size:14px;font-weight:500;color:var(--txt);text-decoration:none}
+.brand b{color:var(--blue);font-weight:400}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--txt2);text-decoration:none;letter-spacing:.03em;transition:color .15s}
+.nav-links a:hover{color:var(--txt)}
+.nav-btns{display:flex;gap:8px}
+.nb-ghost{font-family:var(--mono);font-size:11px;color:var(--txt2);border:1px solid var(--border2);background:none;border-radius:var(--r);padding:6px 14px;cursor:pointer;text-decoration:none;transition:all .15s;letter-spacing:.02em}
+.nb-ghost:hover{color:var(--txt);border-color:rgba(255,255,255,.2)}
+.nb-solid{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--bg);background:var(--blue);border:none;border-radius:var(--r);padding:7px 16px;cursor:pointer;text-decoration:none;transition:opacity .15s;letter-spacing:.02em}
+.nb-solid:hover{opacity:.82}
+
+/* ── SECTIONS ── */
+.sec{padding:96px 44px;position:relative;z-index:1}
+.sec+.sec{border-top:1px solid var(--border)}
+.sec-lbl{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.sec-lbl::before{content:'';display:block;width:20px;height:1px;background:var(--txt3)}
+h2{font-family:var(--head);font-size:clamp(28px,3.8vw,46px);font-weight:700;letter-spacing:-.035em;line-height:1.08;margin-bottom:14px}
+.sub{font-family:var(--mono);font-size:13px;color:var(--txt2);line-height:1.75;max-width:500px;font-weight:300}
+
+
+/* ── CONTACT FORM ── */
+.contact-form{max-width:560px;margin:48px auto 0}
+.cf-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.cf-full{margin-bottom:12px}
+.cf-label{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:6px}
+.cf-input,.cf-select,.cf-textarea{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:var(--r);padding:11px 14px;font-family:var(--mono);font-size:12px;color:var(--txt);outline:none;transition:border-color .15s;appearance:none;-webkit-appearance:none}
+.cf-input:focus,.cf-select:focus,.cf-textarea:focus{border-color:var(--blue)}
+.cf-input::placeholder,.cf-textarea::placeholder{color:var(--txt3)}
+.cf-textarea{resize:vertical;min-height:100px;line-height:1.6}
+.cf-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2342454c' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.cf-select option{background:var(--bg2);color:var(--txt)}
+.cf-submit{width:100%;background:var(--blue);color:var(--bg);border:none;border-radius:var(--r);padding:13px;font-family:var(--mono);font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s;letter-spacing:.02em;margin-top:4px}
+.cf-submit:hover{opacity:.83}
+.cf-success{display:none;background:var(--green-dim);border:1px solid var(--green-border);border-radius:var(--r);padding:14px;text-align:center;font-family:var(--mono);font-size:13px;color:var(--green);margin-top:12px}
+.cf-note{font-family:var(--mono);font-size:11px;color:var(--txt3);text-align:center;margin-top:12px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:112px 44px 80px;position:relative;z-index:1}
+.hero-kicker{font-family:var(--mono);font-size:11px;color:var(--blue);letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.kicker-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:kdot 2.2s ease-in-out infinite}
+@keyframes kdot{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:var(--head);font-size:clamp(48px,7vw,92px);font-weight:800;line-height:.97;letter-spacing:-.045em;max-width:760px}
+.h1-muted{color:var(--txt3);font-weight:400}
+.h1-serif{font-family:var(--serif);font-style:italic;font-weight:300;color:var(--txt2)}
+.hero-p{font-family:var(--mono);font-size:14px;color:var(--txt2);line-height:1.75;max-width:480px;margin:26px 0 38px;font-weight:300}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hbtn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;font-weight:500;padding:12px 24px;border-radius:var(--r);text-decoration:none;cursor:pointer;border:none;transition:all .15s;letter-spacing:.01em}
+.hbtn-blue{background:var(--blue);color:var(--bg)}
+.hbtn-blue:hover{opacity:.83}
+.hbtn-line{background:none;color:var(--txt2);border:1px solid var(--border2)}
+.hbtn-line:hover{color:var(--txt);border-color:rgba(255,255,255,.2)}
+
+/* service pills */
+.pills{display:flex;gap:8px;margin-top:56px;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:7px 13px;font-family:var(--mono);font-size:11px;color:var(--txt2);letter-spacing:.02em}
+.pill-d{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pd-b{background:var(--blue)}.pd-g{background:var(--green)}.pd-a{background:var(--amber)}
+
+/* ── SERVICES ── */
+.svc-list{display:flex;flex-direction:column;gap:1px;margin-top:56px}
+.svc{display:grid;grid-template-columns:180px 1fr 160px;gap:36px;align-items:start;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:34px 36px;transition:border-color .2s}
+.svc:hover{border-color:var(--border2)}
+.svc-meta{}
+.svc-n{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.08em;margin-bottom:10px}
+.svc-badge{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:3px}
+.sb-b{background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-border)}
+.sb-g{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.sb-a{background:var(--amber-dim);color:var(--amber);border:1px solid var(--amber-border)}
+.svc-body{}
+.svc-h{font-family:var(--head);font-size:22px;font-weight:700;letter-spacing:-.025em;margin-bottom:9px;line-height:1.15}
+.svc-p{font-family:var(--mono);font-size:12px;color:var(--txt2);line-height:1.7;font-weight:300;max-width:500px;margin-bottom:18px}
+.svc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.stag{font-family:var(--mono);font-size:10px;color:var(--txt3);background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px 8px}
+.svc-right{text-align:right}
+.svc-price{font-family:var(--mono);font-size:18px;font-weight:400;color:var(--txt);white-space:nowrap}
+.svc-pnote{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-top:3px;white-space:nowrap}
+.svc-link{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:11px;text-decoration:none;letter-spacing:.02em;transition:opacity .15s}
+.svc-link:hover{opacity:.65}
+
+/* ── PULSE CALLOUT ── */
+.pulse-callout{background:var(--bg2)}
+.pulse-inner{display:grid;grid-template-columns:1fr 400px;gap:64px;align-items:center;margin-top:48px}
+.score-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:28px;overflow:hidden}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.sc-url{font-family:var(--mono);font-size:11px;color:var(--txt3);background:var(--bg2);border:1px solid var(--border);border-radius:3px;padding:4px 10px}
+.sc-tier{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:3px;background:rgba(240,112,112,.1);color:var(--red)}
+.sc-num{font-family:var(--mono);font-size:64px;font-weight:300;line-height:1;color:var(--red);margin-bottom:2px}
+.sc-denom{font-family:var(--mono);font-size:11px;color:var(--txt3);margin-bottom:14px}
+.sc-bar{height:3px;background:var(--bg2);border-radius:2px;margin-bottom:20px;overflow:hidden}
+.sc-fill{height:100%;width:22%;background:var(--red);border-radius:2px}
+.sc-rows{display:flex;flex-direction:column;gap:0}
+.sc-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px}
+.sc-row:last-child{border-bottom:none}
+.sc-rname{color:var(--txt2)}
+.sc-rval{color:var(--red)}
+.sc-rval.ok{color:var(--green)}
+
+/* ── HOW WE WORK ── */
+.hww-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:52px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.hww-step{background:var(--bg2);padding:28px 24px;border-right:1px solid var(--border)}
+.hww-step:last-child{border-right:none}
+.hww-n{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.08em;margin-bottom:14px}
+.hww-h{font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:7px;line-height:1.2}
+.hww-p{font-family:var(--mono);font-size:11px;color:var(--txt2);line-height:1.65;font-weight:300}
+
+/* ── RAG EXPLAINER ── */
+.rag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px}
+.rag-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px}
+.rag-step{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.1em;margin-bottom:14px}
+.rag-h{font-family:var(--head);font-size:17px;font-weight:600;letter-spacing:-.02em;margin-bottom:7px}
+.rag-p{font-family:var(--mono);font-size:11px;color:var(--txt2);line-height:1.65;font-weight:300;margin-bottom:12px}
+.rag-eg{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;font-family:var(--mono);font-size:10px;color:var(--txt3);line-height:1.7}
+.rag-arrow{display:flex;align-items:center;justify-content:center;color:var(--border2);font-size:22px;padding:24px 0}
+
+/* ── VIBE GRID ── */
+.vibe-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:52px}
+.vibe-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px;transition:border-color .2s}
+.vibe-card:hover{border-color:var(--border2)}
+.vibe-ico{width:34px;height:34px;border-radius:4px;background:var(--amber-dim);border:1px solid var(--amber-border);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.vibe-h{font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.vibe-p{font-family:var(--mono);font-size:11px;color:var(--txt2);line-height:1.65;font-weight:300;margin-bottom:12px}
+.vibe-stack{display:flex;flex-wrap:wrap;gap:5px}
+.vstag{font-family:var(--mono);font-size:10px;color:var(--txt3);background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:2px 7px}
+
+/* ── WHO ── */
+.who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:52px}
+.who-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:24px}
+.who-sector{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.who-h{font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.who-p{font-family:var(--mono);font-size:11px;color:var(--txt2);line-height:1.6;font-weight:300;margin-bottom:12px}
+.who-svcs{display:flex;flex-direction:column;gap:5px}
+.wsvc{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:3px;display:inline-block;align-self:flex-start}
+
+/* ── NO CASE STUDIES — TRUST BUILDERS ── */
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px}
+.trust-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px}
+.trust-icon{font-family:var(--mono);font-size:22px;color:var(--blue);margin-bottom:14px}
+.trust-h{font-family:var(--head);font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:7px}
+.trust-p{font-family:var(--mono);font-size:11px;color:var(--txt2);line-height:1.65;font-weight:300}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px}
+.pc{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;transition:border-color .2s}
+.pc:hover{border-color:var(--border2)}
+.pc.featured{border-color:var(--blue)}
+.pc-badge{font-family:var(--mono);font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--bg);background:var(--blue);padding:3px 9px;border-radius:3px;display:inline-block;margin-bottom:14px;align-self:flex-start}
+.pc-svc{font-family:var(--mono);font-size:10px;color:var(--txt3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.pc-name{font-family:var(--head);font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:16px}
+.pc-price{font-family:var(--mono);font-size:32px;font-weight:300;line-height:1;margin-bottom:3px}
+.pc-note{font-family:var(--mono);font-size:10px;color:var(--txt3);margin-bottom:20px}
+.pc-div{height:1px;background:var(--border);margin:18px 0}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:7px;flex:1}
+.pc-feat{font-family:var(--mono);font-size:11px;color:var(--txt2);display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.pc-feat::before{content:'→';color:var(--blue);flex-shrink:0;font-size:10px;margin-top:2px}
+.pc-cta{display:block;text-align:center;margin-top:22px;font-family:var(--mono);font-size:12px;font-weight:500;padding:11px;border-radius:var(--r);text-decoration:none;transition:all .15s;letter-spacing:.02em}
+.pc-cta-line{background:none;color:var(--txt2);border:1px solid var(--border2)}
+.pc-cta-line:hover{color:var(--txt);border-color:rgba(255,255,255,.22)}
+.pc-cta-solid{background:var(--blue);color:var(--bg);border:none}
+.pc-cta-solid:hover{opacity:.84}
+
+/* ── CTA BAND ── */
+.cta-band{background:var(--bg2);border-top:1px solid var(--border);padding:96px 44px;text-align:center;position:relative;z-index:1}
+.cta-band h2{margin:0 auto 14px;max-width:520px}
+.cta-band .sub{margin:0 auto 36px;text-align:center;max-width:420px}
+.cta-band-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* ── FOOTER ── */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:32px 44px;position:relative;z-index:1;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px}
+.f-brand{font-family:var(--mono);font-size:13px;font-weight:500}
+.f-brand b{color:var(--blue);font-weight:400}
+.f-nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.f-nav a{font-family:var(--mono);font-size:11px;color:var(--txt3);text-decoration:none;transition:color .15s}
+.f-nav a:hover{color:var(--txt2)}
+.f-right{font-family:var(--mono);font-size:11px;color:var(--txt3);text-align:right}
+
+@media(max-width:960px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero,.sec,.cta-band{padding-left:20px;padding-right:20px}
+  .svc{grid-template-columns:1fr;gap:16px}.svc-right{text-align:left}
+  .pulse-inner{grid-template-columns:1fr}
+  .hww-grid{grid-template-columns:1fr 1fr}
+  .rag-grid,.who-grid,.trust-grid,.pricing-grid{grid-template-columns:1fr}
+  .vibe-grid{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;gap:14px}.f-right{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="brand" href="/">smart<b>agent</b>x</a>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#rag">RAG</a>
+    <a href="#vibe">Vibe Coding</a>
+    <a href="#who">Who we help</a>
+    <a href="#pricing">Pricing</a>
+  </div>
+  <div class="nav-btns">
+    <a class="nb-ghost" href="mailto:hello@smartagentx.ai">Contact</a>
+    <a class="nb-solid" href="https://pulse.smartagentx.ai">Free store audit →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-kicker"><div class="kicker-dot"></div>AI Implementation Studio</div>
+  <h1>
+    We put <span class="h1-serif">AI</span><br>
+    to work in<br>
+    <span class="h1-muted">your business.</span>
+  </h1>
+  <p class="hero-p">
+    Not strategy. Not slide decks. We build and deploy AI — into your store, your product, and your workflows. Every engagement ends with something running in production.
+  </p>
+  <div class="hero-btns">
+    <a class="hbtn hbtn-blue" href="https://pulse.smartagentx.ai">Free AI readiness audit →</a>
+    <a class="hbtn hbtn-line" href="#services">See what we build</a>
+  </div>
+  <div class="pills">
+    <div class="pill"><div class="pill-d pd-b"></div>Agentic Commerce Visibility</div>
+    <div class="pill"><div class="pill-d pd-g"></div>RAG Implementation</div>
+    <div class="pill"><div class="pill-d pd-a"></div>AI Augmentation · Vibe Coding</div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="sec rv" id="services">
+  <div class="sec-lbl">What we build</div>
+  <h2>Three services.<br>One outcome: AI that works.</h2>
+  <p class="sub">We pick up where generic AI consulting stops — and actually implement it.</p>
+
+  <div class="svc-list">
+
+    <div class="svc">
+      <div class="svc-meta">
+        <div class="svc-n">01 / E-COMMERCE</div>
+        <span class="svc-badge sb-b">AI Visibility</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-h">Agentic Commerce Visibility</div>
+        <div class="svc-p">AI shopping assistants — Google Gemini, ChatGPT, Perplexity — recommend products based on structured files your store almost certainly doesn't have. We generate agents.json, llms.txt, and full product schema so your store appears in AI-driven shopping flows. Measured by your Agentic Pulse Score before and after.</div>
+        <div class="svc-tags">
+          <span class="stag">agents.json</span><span class="stag">llms.txt</span><span class="stag">Product schema</span>
+          <span class="stag">Shopify</span><span class="stag">WooCommerce</span><span class="stag">BigCommerce</span>
+          <span class="stag">AI rank monitoring</span>
+        </div>
+      </div>
+      <div class="svc-right">
+        <div class="svc-price">from $497</div>
+        <div class="svc-pnote">one-time · 30 days</div>
+        <a class="svc-link" href="https://pulse.smartagentx.ai" style="color:var(--blue)">Free audit →</a>
+      </div>
+    </div>
+
+    <div class="svc" id="rag">
+      <div class="svc-meta">
+        <div class="svc-n">02 / KNOWLEDGE AI</div>
+        <span class="svc-badge sb-g">RAG System</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-h">RAG Implementation</div>
+        <div class="svc-p">Retrieval-Augmented Generation gives your business an AI that answers from your own data — not the internet, not hallucinations. Customer support bots that answer from your actual policies. Internal tools that surface the right document instantly. Sales assistants trained on your product catalogue. We build the full pipeline: ingestion, vector store, LLM integration, and a usable interface.</div>
+        <div class="svc-tags">
+          <span class="stag">Document ingestion</span><span class="stag">Vector database</span>
+          <span class="stag">Claude / GPT-4o</span><span class="stag">Chat interface</span>
+          <span class="stag">Slack bot</span><span class="stag">API endpoint</span><span class="stag">Web embed</span>
+        </div>
+      </div>
+      <div class="svc-right">
+        <div class="svc-price">from $2,500</div>
+        <div class="svc-pnote">project · 4–6 weeks</div>
+        <a class="svc-link" href="mailto:hello@smartagentx.ai" style="color:var(--green)">Get a quote →</a>
+      </div>
+    </div>
+
+    <div class="svc" id="vibe">
+      <div class="svc-meta">
+        <div class="svc-n">03 / AI DEV</div>
+        <span class="svc-badge sb-a">Vibe Coding</span>
+      </div>
+      <div class="svc-body">
+        <div class="svc-h">AI Augmentation via Vibe Coding</div>
+        <div class="svc-p">Using AI-assisted development, we prototype and ship AI features into your product or workflow in days not months. One fixed-scope sprint. One AI feature in production. Whether it's an AI dashboard, an internal co-pilot, a smart automation, or a new product capability — we scope it, build it, and hand you working code. You own everything.</div>
+        <div class="svc-tags">
+          <span class="stag">AI dashboard</span><span class="stag">Internal co-pilot</span>
+          <span class="stag">Workflow automation</span><span class="stag">LLM feature</span>
+          <span class="stag">React / Next.js</span><span class="stag">Python / FastAPI</span><span class="stag">1–2 week sprint</span>
+        </div>
+      </div>
+      <div class="svc-right">
+        <div class="svc-price">from $1,500</div>
+        <div class="svc-pnote">per sprint · 1–2 weeks</div>
+        <a class="svc-link" href="mailto:hello@smartagentx.ai" style="color:var(--amber)">Start a sprint →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PULSE CALLOUT -->
+<section class="sec pulse-callout rv">
+  <div class="sec-lbl">Flagship tool</div>
+  <div class="pulse-inner">
+    <div>
+      <h2>Is your store invisible<br>to AI assistants?</h2>
+      <p class="sub" style="margin-bottom:24px">We built a free tool that scans any store URL and returns a 0–100 Agentic Pulse Score — checking 12 AI-readiness signals in 30 seconds. No account needed.</p>
+      <a class="hbtn hbtn-blue" href="https://pulse.smartagentx.ai">Score your store free →</a>
+      <p style="font-family:var(--mono);font-size:11px;color:var(--txt3);margin-top:16px">Works on any platform · Results delivered to your inbox</p>
+    </div>
+    <div class="score-card">
+      <div class="sc-top">
+        <div class="sc-url">↳ skullcandy.eu</div>
+        <span class="sc-tier">Agent-Blind</span>
+      </div>
+      <div class="sc-num">22</div>
+      <div class="sc-denom">out of 100</div>
+      <div class="sc-bar"><div class="sc-fill"></div></div>
+      <div class="sc-rows">
+        <div class="sc-row"><span class="sc-rname">agents.json</span><span class="sc-rval">missing · −20 pts</span></div>
+        <div class="sc-row"><span class="sc-rname">llms.txt</span><span class="sc-rval">missing · −15 pts</span></div>
+        <div class="sc-row"><span class="sc-rname">Product JSON-LD</span><span class="sc-rval">missing · −15 pts</span></div>
+        <div class="sc-row"><span class="sc-rname">Breadcrumb schema</span><span class="sc-rval">missing · −7 pts</span></div>
+        <div class="sc-row"><span class="sc-rname">HTTPS</span><span class="sc-rval ok">✓ present</span></div>
+        <div class="sc-row"><span class="sc-rname">Sitemap XML</span><span class="sc-rval ok">✓ present</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="sec rv">
+  <div class="sec-lbl">How we work</div>
+  <h2>Scoped, shipped,<br>handed over.</h2>
+  <p class="sub">Every engagement follows the same four steps — so you always know what to expect and when.</p>
+  <div class="hww-grid">
+    <div class="hww-step">
+      <div class="hww-n">STEP 01</div>
+      <div class="hww-h">Scope call — 30 min</div>
+      <div class="hww-p">We talk through your problem. No pitch deck. Just a direct conversation about what you need and whether we're the right fit to build it.</div>
+    </div>
+    <div class="hww-step">
+      <div class="hww-n">STEP 02</div>
+      <div class="hww-h">Fixed-price proposal</div>
+      <div class="hww-p">You get a clear scope document: exactly what we'll build, what we won't, the timeline, and the price. No hourly billing surprises.</div>
+    </div>
+    <div class="hww-step">
+      <div class="hww-n">STEP 03</div>
+      <div class="hww-h">Build and iterate</div>
+      <div class="hww-p">We build with weekly check-ins. You see progress early and can redirect. We don't disappear for six weeks and reappear with a surprise.</div>
+    </div>
+    <div class="hww-step" style="border-right:none">
+      <div class="hww-n">STEP 04</div>
+      <div class="hww-h">Deploy and hand over</div>
+      <div class="hww-p">Everything goes live. You get the code, the docs, and a walkthrough. You own it outright. Ongoing support available if needed.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RAG DEEP DIVE -->
+<section class="sec rv">
+  <div class="sec-lbl">RAG implementation</div>
+  <h2>Your knowledge.<br>Instantly queryable.</h2>
+  <p class="sub">RAG connects an LLM to your actual data. The result is an AI that answers correctly because it's reading your documents, not guessing.</p>
+  <div class="rag-grid">
+    <div class="rag-card">
+      <div class="rag-step">STEP 01 / INGEST</div>
+      <div class="rag-h">Connect your data</div>
+      <div class="rag-p">We pull in your documents, PDFs, databases, wikis, and help content. Everything gets chunked, cleaned, and embedded into a vector store.</div>
+      <div class="rag-eg">PDFs · Notion · Confluence<br>Google Drive · SQL · APIs<br>CSV · Support tickets</div>
+    </div>
+    <div class="rag-card">
+      <div class="rag-step">STEP 02 / RETRIEVE</div>
+      <div class="rag-h">Semantic search layer</div>
+      <div class="rag-p">Questions trigger semantic retrieval — the system finds the most relevant chunks from your knowledge base and passes them to the model as context.</div>
+      <div class="rag-eg">pgvector · Pinecone · Weaviate<br>Embeddings: OpenAI · Cohere<br>Hybrid search supported</div>
+    </div>
+    <div class="rag-card">
+      <div class="rag-step">STEP 03 / GENERATE</div>
+      <div class="rag-h">Grounded answers</div>
+      <div class="rag-p">The LLM generates answers from retrieved content — not from training data. Responses cite sources. Hallucinations drop dramatically. You control the tone.</div>
+      <div class="rag-eg">Claude · GPT-4o · Mistral<br>Deployed: chat widget · Slack<br>API endpoint · web embed</div>
+    </div>
+  </div>
+</section>
+
+<!-- VIBE CODING DEEP DIVE -->
+<section class="sec rv">
+  <div class="sec-lbl">AI Augmentation via Vibe Coding</div>
+  <h2>One sprint.<br>One AI feature. Shipped.</h2>
+  <p class="sub">We use AI-assisted development to build and ship fast. Here's what we typically build in a single sprint.</p>
+  <div class="vibe-grid">
+    <div class="vibe-card">
+      <div class="vibe-ico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <div class="vibe-h">AI-powered dashboards</div>
+      <div class="vibe-p">Turn static data into a queryable interface. Ask questions in plain English. Get summaries, anomaly detection, and plain-language reports without writing SQL.</div>
+      <div class="vibe-stack"><span class="vstag">Next.js</span><span class="vstag">Claude API</span><span class="vstag">Recharts</span><span class="vstag">Postgres</span></div>
+    </div>
+    <div class="vibe-card">
+      <div class="vibe-ico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div class="vibe-h">Internal co-pilot tools</div>
+      <div class="vibe-p">An AI assistant that knows your processes. Proposal generators, onboarding guides, support reply drafters — built around your actual workflow, not a generic template.</div>
+      <div class="vibe-stack"><span class="vstag">React</span><span class="vstag">FastAPI</span><span class="vstag">Claude API</span><span class="vstag">Slack SDK</span></div>
+    </div>
+    <div class="vibe-card">
+      <div class="vibe-ico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      </div>
+      <div class="vibe-h">Smart automation workflows</div>
+      <div class="vibe-p">Replace manual processes with AI pipelines. Lead enrichment, email triage, report generation, data classification — running automatically without a human in the loop.</div>
+      <div class="vibe-stack"><span class="vstag">Python</span><span class="vstag">n8n</span><span class="vstag">OpenAI</span><span class="vstag">Webhooks</span></div>
+    </div>
+    <div class="vibe-card">
+      <div class="vibe-ico">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <div class="vibe-h">Product AI feature sprint</div>
+      <div class="vibe-p">Add one AI feature to your existing product. Scoped to a 1–2 week sprint. Fixed price. Working code delivered. You describe what you need — we build it.</div>
+      <div class="vibe-stack"><span class="vstag">Any stack</span><span class="vstag">API-first</span><span class="vstag">Fixed price</span><span class="vstag">You own it</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE HELP -->
+<section class="sec rv" id="who">
+  <div class="sec-lbl">Who we work with</div>
+  <h2>Any business that needs<br>AI that actually works.</h2>
+  <p class="sub">We work with e-commerce merchants, startups, SaaS teams, and small businesses. The common thread: you want AI implemented, not advised on.</p>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-sector">E-COMMERCE</div>
+      <div class="who-h">Online merchants</div>
+      <div class="who-p">Shopify, BigCommerce, WooCommerce. Revenue $50K–$5M. Losing ground to AI-visible competitors and need to fix it fast.</div>
+      <div class="who-svcs">
+        <span class="wsvc" style="background:var(--blue-dim);color:var(--blue)">AI Visibility</span>
+        <span class="wsvc" style="background:var(--green-dim);color:var(--green)">RAG for support</span>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-sector">SAAS / STARTUPS</div>
+      <div class="who-h">Product teams</div>
+      <div class="who-p">Building a product and want to add an AI feature without a 3-month engineering sprint. One sprint, real feature, shipped.</div>
+      <div class="who-svcs">
+        <span class="wsvc" style="background:var(--amber-dim);color:var(--amber)">Vibe Coding sprint</span>
+        <span class="wsvc" style="background:var(--green-dim);color:var(--green)">RAG pipeline</span>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-sector">SMALL BUSINESS</div>
+      <div class="who-h">Growing teams</div>
+      <div class="who-p">Teams wasting hours on manual work that AI could handle. Internal automation, smart dashboards, workflow co-pilots.</div>
+      <div class="who-svcs">
+        <span class="wsvc" style="background:var(--amber-dim);color:var(--amber)">Automation tools</span>
+        <span class="wsvc" style="background:var(--green-dim);color:var(--green)">Knowledge RAG</span>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-sector">ANY INDUSTRY</div>
+      <div class="who-h">Anyone with a real problem</div>
+      <div class="who-p">If you have a specific AI problem and existing solutions aren't fitting it — tell us what you're trying to do. We'll tell you honestly whether we can help.</div>
+      <div class="who-svcs">
+        <span class="wsvc" style="background:var(--border);color:var(--txt2)">Let's talk →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY TRUST US (no fake case studies) -->
+<section class="sec rv">
+  <div class="sec-lbl">Why SmartAgentX</div>
+  <h2>We're builders,<br>not advisors.</h2>
+  <p class="sub">We're a new agency — no inflated case study numbers, no borrowed logos. What we offer instead:</p>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-icon">[ ]</div>
+      <div class="trust-h">You see the work before you pay</div>
+      <div class="trust-p">Every project starts with a free audit or a no-cost scoping call. For the Pulse Score tool — you get a real report on your store before spending a cent. We earn the engagement by demonstrating value first.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">{ }</div>
+      <div class="trust-h">Fixed price, fixed scope</div>
+      <div class="trust-p">No hourly billing. No scope creep surprises. Every project has a defined scope, a defined deliverable, and a defined price agreed before we start. If something changes, we tell you before we do it.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-icon">//</div>
+      <div class="trust-h">You own everything</div>
+      <div class="trust-p">All code, all files, all systems we build are yours. No proprietary lock-in, no platform dependency, no recurring fee to keep your own AI running. We hand it over completely.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec rv" id="pricing">
+  <div class="sec-lbl">Pricing</div>
+  <h2>Transparent from<br>the first conversation.</h2>
+  <p class="sub">Fixed-price engagements only. No retainers required to start.</p>
+  <div class="pricing-grid">
+    <div class="pc">
+      <div class="pc-svc">Agentic Visibility</div>
+      <div class="pc-name">AI Commerce Readiness</div>
+      <div class="pc-price">$497</div>
+      <div class="pc-note">one-time · e-commerce stores</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li class="pc-feat">agents.json + llms.txt generation</li>
+        <li class="pc-feat">Product JSON-LD schema</li>
+        <li class="pc-feat">Review + breadcrumb schema</li>
+        <li class="pc-feat">robots.txt AI crawler rules</li>
+        <li class="pc-feat">Before + after Pulse Score audit</li>
+        <li class="pc-feat">30-day delivery guarantee</li>
+      </ul>
+      <a class="pc-cta pc-cta-line" href="https://pulse.smartagentx.ai">Start with free audit</a>
+    </div>
+    <div class="pc featured">
+      <div class="pc-badge">Most popular</div>
+      <div class="pc-svc">RAG Implementation</div>
+      <div class="pc-name">Knowledge AI System</div>
+      <div class="pc-price">from $2,500</div>
+      <div class="pc-note">project · 4–6 weeks</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li class="pc-feat">Document ingestion pipeline</li>
+        <li class="pc-feat">Vector database setup + hosting</li>
+        <li class="pc-feat">LLM integration (Claude or GPT-4o)</li>
+        <li class="pc-feat">Chat interface or API endpoint</li>
+        <li class="pc-feat">Admin panel to manage sources</li>
+        <li class="pc-feat">Full code handover + docs</li>
+      </ul>
+      <a class="pc-cta pc-cta-solid" href="mailto:hello@smartagentx.ai">Get a scoped quote →</a>
+    </div>
+    <div class="pc">
+      <div class="pc-svc">Vibe Coding Sprint</div>
+      <div class="pc-name">AI Feature Build</div>
+      <div class="pc-price">from $1,500</div>
+      <div class="pc-note">per sprint · 1–2 weeks</div>
+      <div class="pc-div"></div>
+      <ul class="pc-feats">
+        <li class="pc-feat">Scoped to one AI feature</li>
+        <li class="pc-feat">Fixed price agreed upfront</li>
+        <li class="pc-feat">Daily or every-other-day updates</li>
+        <li class="pc-feat">Working code in production</li>
+        <li class="pc-feat">You own all code outright</li>
+        <li class="pc-feat">Optional: follow-on sprint available</li>
+      </ul>
+      <a class="pc-cta pc-cta-line" href="mailto:hello@smartagentx.ai">Describe your feature</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band rv">
+  <div class="sec-lbl" style="justify-content:center;display:flex">Get started</div>
+  <h2>Tell us what you need.<br>We'll tell you if we can build it.</h2>
+  <p class="sub">Free 30-minute scoping call. No pitch. No deck. Just a direct conversation about your problem and the fastest path to solving it.</p>
+  <div class="cta-band-btns">
+    <a class="hbtn hbtn-blue" href="https://pulse.smartagentx.ai">Free store AI audit →</a>
+    <a class="hbtn hbtn-line" href="mailto:hello@smartagentx.ai">Email your project brief</a>
+  </div>
+  <p style="font-family:var(--mono);font-size:11px;color:var(--txt3);margin-top:18px"><a href="mailto:hello@smartagentx.ai" class="__cf_email__" data-cfemail="ddb5b8b1b1b29daeb0bcafa9bcbab8b3a9a5f3bcb4">[email&#160;protected]</a> · Response within 24 hours</p>
+</section>
+
+<footer>
+  <div class="f-brand">smart<b>agent</b>x</div>
+  <nav class="f-nav">
+    <a href="#services">Services</a>
+    <a href="#rag">RAG</a>
+    <a href="#vibe">Vibe Coding</a>
+    <a href="#who">Who we help</a>
+    <a href="#pricing">Pricing</a>
+    <a href="https://pulse.smartagentx.ai">Free audit</a>
+    <a href="mailto:hello@smartagentx.ai">Contact</a>
+  </nav>
+  <div class="f-right">© 2025 SmartAgentX<br>hello@smartagentx.ai</div>
+</footer>
+
+<script>
+
+function submitForm() {
+  const name    = document.getElementById('cf-name').value.trim();
+  const email   = document.getElementById('cf-email').value.trim();
+  const service = document.getElementById('cf-service').value;
+  const message = document.getElementById('cf-message').value.trim();
+
+  if (!name || !email || !service || !message) {
+    alert('Please fill in all fields before sending.');
+    return;
+  }
+  if (!email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  // Build mailto link with pre-filled content
+  const subject = encodeURIComponent('SmartAgentX inquiry: ' + service);
+  const body    = encodeURIComponent(
+    'Name: ' + name + '\n' +
+    'Email: ' + email + '\n' +
+    'Service: ' + service + '\n\n' +
+    'Message:\n' + message
+  );
+  window.location.href = 'mailto:hello@smartagentx.ai?subject=' + subject + '&body=' + body;
+
+  // Show success state
+  document.getElementById('cf-success').style.display = 'block';
+  document.querySelector('.cf-submit').style.display  = 'none';
+}
+
+const io = new IntersectionObserver(
+  es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('on') }),
+  { threshold: 0.07 }
+);
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
